@@ -45,6 +45,11 @@ module.exports = {
 		clientSecret: process.env.GITHUB_SECRET || 'APP_SECRET',
 		callbackURL: '/auth/github/callback'
 	},
+    spotify: {
+        clientID: process.env.SPOTIFY_ID || '777a8702b1b042ddac3c8f53f02291dc',
+        clientSecret: process.env.SPOTIFY_SECRET || 'a938f65f259e45ad95c98ea4367e68fd',
+        callbackURL: '/auth/spotify/callback'
+    },
 	mailer: {
 		from: process.env.MAILER_FROM || 'MAILER_FROM',
 		options: {
