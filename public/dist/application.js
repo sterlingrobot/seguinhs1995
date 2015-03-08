@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'mean';
-	var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils'];
+	var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'spotify'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -49,6 +49,10 @@ ApplicationConfiguration.registerModule('articles');
 
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('core');
+'use strict';
+
+// Use Applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('tracks');
 'use strict';
 
 // Use Applicaion configuration module to register a new module
@@ -369,6 +373,127 @@ angular.module('core').service('Menus', [
 
 		//Adding the topbar menu
 		this.addMenu('topbar');
+	}
+]);
+'use strict';
+
+// Configuring the Tracks module
+angular.module('tracks').run(['Menus',
+	function(Menus) {
+		// Set top bar menu items
+		Menus.addMenuItem('topbar', 'Tracks', 'tracks', 'dropdown', '/tracks(/create)?');
+		Menus.addSubMenuItem('topbar', 'tracks', 'List Tracks', 'tracks');
+		Menus.addSubMenuItem('topbar', 'tracks', 'New Track', 'tracks/create');
+	}
+]);
+'use strict';
+
+// Setting up route
+angular.module('tracks').config(['$stateProvider',
+	function($stateProvider) {
+		// Tracks state routing
+		$stateProvider.
+		state('listTracks', {
+			url: '/tracks',
+			templateUrl: 'modules/tracks/views/list-tracks.client.view.html'
+		}).
+		state('createTrack', {
+			url: '/tracks/create',
+			templateUrl: 'modules/tracks/views/create-track.client.view.html'
+		}).
+		state('viewTrack', {
+			url: '/tracks/:trackId',
+			templateUrl: 'modules/tracks/views/view-track.client.view.html'
+		}).
+		state('editTrack', {
+			url: '/tracks/:trackId/edit',
+			templateUrl: 'modules/tracks/views/edit-track.client.view.html'
+		});
+	}
+]);
+'use strict';
+
+angular.module('tracks').controller('TracksController', ['$scope', '$stateParams', '$location', 'Authentication', 'spotify', 'Tracks',
+	function($scope, $stateParams, $location, Authentication, Spotify, Tracks) {
+		$scope.authentication = Authentication;
+
+		$scope.create = function() {
+			var track = new Tracks({
+				title: this.title,
+				artist: this.artist
+			});
+			track.$save(function(response) {
+				$location.path('tracks/' + response._id);
+
+				$scope.title = '';
+				$scope.artist = '';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.remove = function(track) {
+			if (track) {
+				track.$remove();
+
+				for (var i in $scope.tracks) {
+					if ($scope.tracks[i] === track) {
+						$scope.tracks.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.track.$remove(function() {
+					$location.path('tracks');
+				});
+			}
+		};
+
+		$scope.update = function() {
+			var track = $scope.track;
+
+			track.$update(function() {
+				$location.path('tracks/' + track._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.searchTracks = function() {
+			var q = $scope.searchQuery,
+				options = {
+					limit: 20,
+					offset: 0
+				};
+
+			Spotify.search(q, 'track', options).then(function (data) {
+			  console.log(data);
+			  $scope.resTracks = data;
+			});
+		};
+
+		$scope.find = function() {
+			$scope.tracks = Tracks.query();
+		};
+
+		$scope.findOne = function() {
+			$scope.track = Tracks.get({
+				trackId: $stateParams.trackId
+			});
+		};
+	}
+]);
+'use strict';
+
+//Tracks service used for communicating with the tracks REST endpoints
+angular.module('tracks').factory('Tracks', ['$resource',
+	function($resource) {
+		return $resource('tracks/:trackId', {
+			trackId: '@_id'
+		}, {
+			update: {
+				method: 'PUT'
+			}
+		});
 	}
 ]);
 'use strict';

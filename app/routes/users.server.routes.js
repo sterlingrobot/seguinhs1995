@@ -47,10 +47,14 @@ module.exports = function(app) {
 	// Setting the linkedin oauth routes
 	app.route('/auth/linkedin').get(passport.authenticate('linkedin'));
 	app.route('/auth/linkedin/callback').get(users.oauthCallback('linkedin'));
-	
+
 	// Setting the github oauth routes
 	app.route('/auth/github').get(passport.authenticate('github'));
 	app.route('/auth/github/callback').get(users.oauthCallback('github'));
+
+	// Setting the spotify oauth routes
+	app.route('/auth/spotify').get(passport.authenticate('spotify'));
+	app.route('/auth/spotify/callback').get(users.oauthCallback('spotify'));
 
 	// Finish by binding the user middleware
 	app.param('userId', users.userByID);
