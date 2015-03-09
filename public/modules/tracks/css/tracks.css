@@ -1,0 +1,41 @@
+.error {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  box-shadow: 0 6px 20px -10px;
+}
+.spotify-login {
+	margin-bottom: 20px;
+}
+.list-group-item-text {
+	display: block;
+}
+.mirror {
+	-moz-transform: scale(-1, 1);
+	-webkit-transform: scale(-1, 1);
+	-o-transform: scale(-1, 1);
+	-ms-transform: scale(-1, 1);
+	transform: scale(-1, 1);
+}
+i.glyphicon,
+.vote-count {
+  font-size: 22px;
+  border-radius: 21px;
+  color: rgba(0, 0, 0, 0.57);
+  border: 2px solid rgba(0, 0, 0, 0.57);
+  margin: 20px;
+  width: 42px;
+  text-align: center;
+  padding: 10px 10px 7px 7px;
+  cursor: pointer;
+}
+.glyphicon.glyphicon-thumbs-down {
+	position: relative;
+	top: 5px;
+}
+.vote-count {
+	border: none;
+	margin: 0;
+	cursor: default;
+}

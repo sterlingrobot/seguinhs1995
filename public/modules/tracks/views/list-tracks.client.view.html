@@ -1,0 +1,47 @@
+<script type="text/ng-template" id="search-tracks.html">
+<a class="clearfix">
+<div class="col-sm-2">
+    <img ng-src="{{match.model.album.images[2].url}}" width="64">
+</div>
+<div class="col-sm-10 col-md-4">
+    <strong ng-bind="match.model.name"></strong><br>
+    <span ng-bind="match.model.artists[0].name"></span>
+</div>
+</a>
+</script>
+<section data-ng-controller="TracksController">
+    <div ng-if="error.message" ng-class="['error', 'alert', error.level]" ng-bind="error.message"></div>
+    <div class="page-header">
+        <h1>Tracks</h1>
+    </div>
+    <div class="spotify-login">
+        <a href="/auth/spotify" class="undecorated-link">
+        <img src="/modules/users/img/buttons/spotify.png">
+        </a>
+    </div>
+    <input type="text" ng-model="selectedTrack" placeholder="Search for a track..." typeahead="track as track.name for item in searchTracks($viewValue)" typeahead-loading="loadingTracks" class="form-control" typeahead-template-url="search-tracks.html" typeahead-on-select="saveTrack($item)">
+    <i ng-show="loadingTracks" class="glyphicon glyphicon-refresh"></i>
+    <div class="list-group" data-ng-init="find()">
+        <div data-ng-repeat="track in tracks | orderBy:'-votes'" class="list-group-item clearfix">
+            <div class="pull-right">
+                <small class="list-group-item-text text-muted text-right">
+                Added by
+                <span data-ng-bind="track.user.displayName"></span>
+                on
+                <span data-ng-bind="track.created | date:'mediumDate'"></span>
+                </small>
+                <i class="mirror glyphicon glyphicon-thumbs-down" ng-click="vote(track, -1)"></i>
+                <span class="vote-count" data-ng-bind="track.votes"></span>
+                <i class="glyphicon glyphicon-thumbs-up" ng-click="vote(track, 1)"></i>
+                <i class="glyphicon glyphicon-trash" ng-click="remove(track)"></i>
+            </div>
+            <div class="col-sm-2">
+                <img ng-src="{{track.artwork}}" height="120">
+            </div>
+            <div class="col-sm-10 col-md-4">
+                <strong ng-bind="track.title"></strong><br>
+                <span ng-bind="track.artist"></span>
+            </div>
+        </div>
+    </div>
+</section>
