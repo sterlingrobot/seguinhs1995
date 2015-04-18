@@ -23,7 +23,9 @@ module.exports = {
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-				'public/lib/angular-spotify/src/angular-spotify.js'
+				'public/lib/angular-spotify/src/angular-spotify.js',
+				'public/lib/lodash/dist/lodash.js',
+				'public/lib/angular-google-maps/dist/angular-google-maps.js'
 			]
 		},
 		css: [

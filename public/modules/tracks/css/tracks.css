@@ -22,7 +22,9 @@ i.glyphicon,
 .vote-count {
   font-size: 22px;
   border-radius: 21px;
+  color: #ddd;
   color: rgba(0, 0, 0, 0.57);
+  border: 2px solid #ddd;
   border: 2px solid rgba(0, 0, 0, 0.57);
   margin: 20px;
   width: 42px;

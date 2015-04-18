@@ -17,7 +17,7 @@ angular.module('users').config(['$httpProvider',
 								$location.path('signin');
 								break;
 							case 403:
-								// Add unauthorized behaviour 
+								// Add unauthorized behaviour
 								break;
 						}
 
@@ -27,4 +27,11 @@ angular.module('users').config(['$httpProvider',
 			}
 		]);
 	}
-]);
+])
+.config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        //    key: 'your api key',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization,places'
+    });
+});
