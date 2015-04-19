@@ -8,8 +8,49 @@
 .spotify-login {
 	margin-bottom: 20px;
 }
+.tracksearch {
+  margin-bottom: 25px;
+}
+.tracksearch > .input-group-addon {
+  min-width: 62px;
+  padding: 0 15px;
+}
+.album-cover {
+  min-width: 150px;
+  text-align: center;
+}
+.play-btn {
+  margin-top: 20px;
+}
+.track-name {
+  padding-left: 10px;
+  padding-right: 0;
+}
+.track-name a {
+  display: block;
+}
+.track-info {
+  min-width: 270px;
+  padding-top: 20px;
+  text-align: right;
+}
 .list-group-item-text {
 	display: block;
+}
+.glyphicon-play,
+.glyphicon-pause {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  padding: 10px 10px 10px 15px;
+  font-size: 40px;
+  border-radius: 35px;
+  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+  border: 2px solid #fff;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  cursor: pointer;
 }
 .mirror {
 	-moz-transform: scale(-1, 1);
@@ -26,11 +67,14 @@ i.glyphicon,
   color: rgba(0, 0, 0, 0.57);
   border: 2px solid #ddd;
   border: 2px solid rgba(0, 0, 0, 0.57);
-  margin: 20px;
+  margin: 8px;
   width: 42px;
   text-align: center;
   padding: 10px 10px 7px 7px;
   cursor: pointer;
+}
+i.glyphicon:last-child {
+  margin-left: 30px;
 }
 .glyphicon.glyphicon-thumbs-down {
 	position: relative;
@@ -40,4 +84,14 @@ i.glyphicon,
 	border: none;
 	margin: 0;
 	cursor: default;
+}
+@media (max-width: 768px) {
+  i.glyphicon,
+  .vote-count {
+    margin: 10px 5px;
+  }
+  .track-name,
+  .track-info {
+    text-align: center;
+  }
 }

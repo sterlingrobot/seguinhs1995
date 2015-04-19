@@ -43,6 +43,10 @@ angular.module('users').controller('MapController', ['$scope', '$log', '$http', 
             mapBounds = new googlemaps.LatLngBounds();
         });
 
+        $scope.addLocation = function(locationData) {
+
+        };
+
         function locationFinder() {
             var locations = [];
 
@@ -88,7 +92,7 @@ angular.module('users').controller('MapController', ['$scope', '$log', '$http', 
 		  */
         function callback(results, status) {
             $log.log(results, status);
-            if (status == googlemaps.places.PlacesServiceStatus.OK) {
+            if (status === googlemaps.places.PlacesServiceStatus.OK) {
                 createMapMarker(results[0]);
             }
         }

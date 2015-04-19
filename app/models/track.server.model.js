@@ -14,6 +14,9 @@ var TrackSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	spotifyId: {
+		type: String
+	},
 	artwork: {
 		type: String,
 		default: '',
@@ -33,6 +36,10 @@ var TrackSchema = new Schema({
 	votes: {
 		type: Number,
 		default: 0
+	},
+	preview_url: {
+		type: String,
+		default: ''
 	},
 	user: {
 		type: Schema.ObjectId,
