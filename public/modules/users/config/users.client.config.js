@@ -30,7 +30,7 @@ angular.module('users').config(['$httpProvider',
 ])
 .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
-        //    key: 'your api key',
+        key: 'AIzaSyCYtSsxmAc8maGMVwWmeJI7ia2CkY_bBzw',
         v: '3.17',
         libraries: 'weather,geometry,visualization,places'
     });

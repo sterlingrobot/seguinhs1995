@@ -1,10 +1,11 @@
 'use strict';
-angular.module('users').controller('MapController', ['$scope', '$log', 'uiGmapGoogleMapApi', 'Users',
-    function($scope, $log, GoogleMapApi, Users) {
+angular.module('users').controller('MapController', ['$scope', '$log', '$http', 'uiGmapGoogleMapApi', 'Users',
+    function($scope, $log, $http, GoogleMapApi, Users) {
         var googlemaps,
             mapdiv,
             mapBounds,
-            locations,
+            locations = [],
+            pinsPosted = false,
             currWindow;
         // Note: Some of the directives require at least something to be defined originally!
         $scope.markers = [];
@@ -19,11 +20,17 @@ angular.module('users').controller('MapController', ['$scope', '$log', 'uiGmapGo
 	            tilesloaded: function(map) {
 		            $scope.$apply(function () {
                         mapdiv = map;
-                        // locations is an array of location strings returned from locationFinder()
-                        locations = locationFinder();
-                        // pinPoster(locations) creates pins on the map for each location in
-                        // the locations array
-                        pinPoster(locations);
+                        if(!pinsPosted) {
+                            // locations is an array of location strings returned from locationFinder()
+                            locationFinder().then(function(data) {
+                                data.data.forEach(function(user) {
+                                    if(user.address.length > 0) locations.push(user.address);
+                                });
+                                // pinPoster(locations) creates pins on the map for each location in
+                                // the locations array
+                                pinPoster(locations);
+                            });
+                        }
                     });
 		        }
 		    }
@@ -37,7 +44,10 @@ angular.module('users').controller('MapController', ['$scope', '$log', 'uiGmapGo
         });
 
         function locationFinder() {
-        	return ['Seguin, Texas', 'Bozeman, Montana', 'Australia'];
+            var locations = [];
+
+            return $http.get('modules/users/json/users.json');
+
         }
         /*
 		  createMapMarker(placeData) reads Google Places search results to create map pins.
@@ -77,7 +87,8 @@ angular.module('users').controller('MapController', ['$scope', '$log', 'uiGmapGo
 		  If so, it creates a new map marker for that location.
 		  */
         function callback(results, status) {
-            if (status === googlemaps.places.PlacesServiceStatus.OK) {
+            $log.log(results, status);
+            if (status == googlemaps.places.PlacesServiceStatus.OK) {
                 createMapMarker(results[0]);
             }
         }
@@ -85,20 +96,23 @@ angular.module('users').controller('MapController', ['$scope', '$log', 'uiGmapGo
 		  pinPoster(locations) takes in the array of locations created by locationFinder()
 		  and fires off Google place searches for each location
 		  */
-        function pinPoster(locations) {
+        function pinPoster(locs) {
+
             // creates a Google place search service object. PlacesService does the work of
             // actually searching for location data.
             var service = new googlemaps.places.PlacesService(mapdiv);
             // Iterates through the array of locations, creates a search object for each location
-            for (var place in locations) {
+            locs.forEach(function(place) {
                 // the search request object
                 var request = {
-                    query: locations[place]
+                    query: place
                 };
                 // Actually searches the Google Maps API for location data and runs the callback
                 // function with the search results after each search.
                 service.textSearch(request, callback);
-            }
+            });
+
+            pinsPosted = true;
         }
     }
 ]);
