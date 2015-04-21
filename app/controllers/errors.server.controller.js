@@ -9,6 +9,9 @@ var getUniqueErrorMessage = function(err) {
 	try {
 		var fieldName = err.err.substring(err.err.lastIndexOf('.$') + 2, err.err.lastIndexOf('_1'));
 		output = fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' already exists';
+		if(fieldName === 'spotifyId') {
+			output = 'Someone has already added that track.  Upvote it?';
+		}
 
 	} catch(ex) {
 		output = 'Unique field already exists';
@@ -22,7 +25,7 @@ var getUniqueErrorMessage = function(err) {
  */
 exports.getErrorMessage = function(err) {
 	var message = '';
-	
+
 	if (err.code) {
 		switch (err.code) {
 			case 11000:

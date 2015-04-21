@@ -2,7 +2,7 @@
 module.exports = {
     db: 'mongodb://localhost/mean-dev',
     app: {
-        title: 'MEAN.JS - Development Environment'
+        title: 'Seguin H.S. Class of 1995 - 20 Year Reunion - Development'
     },
     facebook: {
         clientID: process.env.FACEBOOK_ID || '667672676688130',

@@ -2,13 +2,13 @@
 
 module.exports = {
 	app: {
-		title: 'MEAN.JS',
-		description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
-		keywords: 'mongodb, express, angularjs, node.js, mongoose, passport'
+		title: 'Seguin H.S. Class of 1995 - 20 Year Reunion!',
+		description: 'News and Resources for our 20 Year Reunion Celebration to be held October 9-11, 2015',
+		keywords: 'seguin high school, class of 1995, matadors, 20 year reunion'
 	},
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
-	sessionSecret: 'MEAN',
+	sessionSecret: 'SHS95',
 	sessionCollection: 'sessions',
 	assets: {
 		lib: {

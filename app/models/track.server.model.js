@@ -15,7 +15,8 @@ var TrackSchema = new Schema({
 		default: Date.now
 	},
 	spotifyId: {
-		type: String
+		type: String,
+		unique: 'Track has been added already'
 	},
 	artwork: {
 		type: String,
@@ -40,6 +41,14 @@ var TrackSchema = new Schema({
 	preview_url: {
 		type: String,
 		default: ''
+	},
+	upvotes: {
+		type: [Schema.ObjectId],
+		default: []
+	},
+	downvotes: {
+		type: [Schema.ObjectId],
+		default: []
 	},
 	user: {
 		type: Schema.ObjectId,

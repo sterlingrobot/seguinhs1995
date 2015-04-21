@@ -1,9 +1,9 @@
 <script type="text/ng-template" id="search-tracks.html">
     <a class="clearfix">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <img ng-src="{{match.model.album.images[2].url}}" width="64">
         </div>
-        <div class="col-sm-10 col-md-4">
+        <div class="col-sm-9 col-md-4">
             <strong ng-bind="match.model.name"></strong><br>
             <span ng-bind="match.model.artists[0].name"></span>
         </div>
@@ -26,9 +26,9 @@
             <img ng-show="loadingTracks" src="/modules/tracks/img/loader.gif">
         </span>
     </div>
-    <div class="list-group" data-ng-init="find()">
-        <div data-ng-repeat="track in tracks | orderBy:'-votes'" class="list-group-item clearfix">
-            <div class="col-sm-8">
+    <div class="list-group" data-ng-init="find()" style="position: relative;">
+        <div data-ng-repeat="track in tracks | orderBy:'-votes' " class="track-item list-group-item clearfix">
+            <div id="track_{{track.spotifyId}}" class="col-sm-8">
                 <div class="col-sm-3 album-cover">
                     <img ng-src="{{track.artwork}}" height="120">
                     <span class="glyphicon glyphicon-play" ng-hide="track.isPlaying" ng-click="playPreview(track)" title="Preview"></span>
@@ -38,7 +38,7 @@
                     <strong ng-bind="track.title"></strong><br>
                     <span ng-bind="track.artist"></span>
                     <a class="play-btn" href="http://open.spotify.com/track/{{track.spotifyId}}" ng-click="pausePreview(track)" target="_blank">
-                        <img src="/modules/tracks/img/play_on_spotify.png">
+                        <img src="/modules/tracks/img/listen_on_spotify-black.png">
                     </a>
                 </div>
             </div>
@@ -49,10 +49,14 @@
                 on
                 <span data-ng-bind="track.created | date:'mediumDate'"></span>
                 </small>
-                <i class="mirror glyphicon glyphicon-thumbs-down" ng-click="vote(track, -1)"></i>
+                <i class="mirror glyphicon glyphicon-thumbs-down"
+                    ng-class="{ downvoted: track.downvotes.indexOf(authentication.user._id) > -1 }"
+                    ng-click="downvote(track)"></i>
                 <span class="vote-count" data-ng-bind="track.votes"></span>
-                <i class="glyphicon glyphicon-thumbs-up" ng-click="vote(track, 1)"></i>
-                <i class="glyphicon glyphicon-trash" ng-click="remove(track)"></i>
+                <i class="glyphicon glyphicon-thumbs-up"
+                    ng-class="{ upvoted: track.upvotes.indexOf(authentication.user._id) > -1 }"
+                    ng-click="upvote(track)"></i>
+                <i ng-show="track.user._id === authentication.user._id" class="glyphicon glyphicon-trash" ng-click="remove(track)"></i>
             </div>
 
         </div>
