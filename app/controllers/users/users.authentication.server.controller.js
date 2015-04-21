@@ -24,9 +24,10 @@ exports.signup = function(req, res) {
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
 
-	// Then save the user 
+	// Then save the user
 	user.save(function(err) {
 		if (err) {
+			console.log(err);
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -127,11 +128,11 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 				if (!user) {
 					var possibleUsername = providerUserProfile.username || ((providerUserProfile.email) ? providerUserProfile.email.split('@')[0] : '');
 
-					User.findUniqueUsername(possibleUsername, null, function(availableUsername) {
+					// User.findUniqueUsername(possibleUsername, null, function(availableUsername) {
 						user = new User({
 							firstName: providerUserProfile.firstName,
 							lastName: providerUserProfile.lastName,
-							username: availableUsername,
+							// username: availableUsername,
 							displayName: providerUserProfile.displayName,
 							email: providerUserProfile.email,
 							provider: providerUserProfile.provider,
@@ -142,7 +143,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 						user.save(function(err) {
 							return done(err, user);
 						});
-					});
+					// });
 				} else {
 					return done(err, user);
 				}

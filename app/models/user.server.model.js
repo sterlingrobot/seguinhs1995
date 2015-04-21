@@ -45,7 +45,7 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true,
 		unique: 'Email already exists in the system',
-		required: 'Please fill in a username',
+		required: 'Email is required',
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
