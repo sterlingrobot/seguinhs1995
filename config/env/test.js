@@ -12,8 +12,8 @@ module.exports = {
 		callbackURL: '/auth/facebook/callback'
 	},
 	twitter: {
-		clientID: process.env.TWITTER_KEY || 'CONSUMER_KEY',
-		clientSecret: process.env.TWITTER_SECRET || 'CONSUMER_SECRET',
+		clientID: process.env.TWITTER_KEY || '7n5dVvhR74h2nnyzrJjNhPhj7',
+		clientSecret: process.env.TWITTER_SECRET || 'WmJKvHXd9NffVwQjFu1iVnACthE438RRLgo1hEwrLKH2nPpjCL',
 		callbackURL: '/auth/twitter/callback'
 	},
 	google: {
@@ -22,8 +22,8 @@ module.exports = {
 		callbackURL: '/auth/google/callback'
 	},
 	linkedin: {
-		clientID: process.env.LINKEDIN_ID || 'APP_ID',
-		clientSecret: process.env.LINKEDIN_SECRET || 'APP_SECRET',
+		clientID: process.env.LINKEDIN_ID || '78m118wpems6mt',
+		clientSecret: process.env.LINKEDIN_SECRET || 'EsJuvxKwtBGTo2HI',
 		callbackURL: '/auth/linkedin/callback'
 	},
 	github: {
