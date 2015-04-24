@@ -15,18 +15,22 @@ module.exports = {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+				'public/lib/ng-ckeditor/ng-ckeditor.css',
+				'//fonts.googleapis.com/css?family=Open+Sans:400,300,700'
 			],
 			js: [
 				'public/lib/angular/angular.js',
 				'public/lib/angular-resource/angular-resource.js',
 				'public/lib/angular-animate/angular-animate.js',
+				'public/lib/angular-sanitize/angular-sanitize.js',
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-				'public/lib/countdownjs/countdown.min.js',
 				'public/lib/angular-spotify/src/angular-spotify.js',
 				'public/lib/lodash/dist/lodash.js',
-				'public/lib/angular-google-maps/dist/angular-google-maps.js'
+				'public/lib/angular-google-maps/dist/angular-google-maps.js',
+				'public/lib/ng-ckeditor/libs/ckeditor/ckeditor.js',
+				'public/lib/ng-ckeditor/ng-ckeditor.min.js'
 			]
 		},
 		css: [

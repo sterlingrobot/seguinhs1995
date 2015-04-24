@@ -4,6 +4,12 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Articles) {
 		$scope.authentication = Authentication;
 
+		$scope.editorOptions = {
+			skin: 'kama',
+			pasteFilter: 'p h1 h2; a[!href]',
+		    uiColor: '#aaa'
+		};
+
 		$scope.create = function() {
 			var article = new Articles({
 				title: this.title,
