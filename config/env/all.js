@@ -27,10 +27,12 @@ module.exports = {
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
 				'public/lib/angular-spotify/src/angular-spotify.js',
+				'public/lib/angular-payments/lib/angular-payments.js',
 				'public/lib/lodash/dist/lodash.js',
 				'public/lib/angular-google-maps/dist/angular-google-maps.js',
 				'public/lib/ng-ckeditor/libs/ckeditor/ckeditor.js',
-				'public/lib/ng-ckeditor/ng-ckeditor.min.js'
+				'public/lib/ng-ckeditor/ng-ckeditor.min.js',
+				'https://js.stripe.com/v2/'
 			]
 		},
 		css: [

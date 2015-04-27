@@ -50,6 +50,11 @@ module.exports = {
         clientSecret: process.env.SPOTIFY_SECRET || 'a938f65f259e45ad95c98ea4367e68fd',
         callbackURL: '/auth/spotify/callback'
     },
+    stripe: {
+        clientID: process.env.STRIPE_ID || 'pk_live_oyRzRBuqYlM57kEhO95t7TZX',
+        clientSecret: process.env.STRIPE_SECRET || 'sk_live_HFjJfi7dulNqiXiT9ZdVEQtP',
+        callbackURL: ''
+    },
 	mailer: {
 		from: process.env.MAILER_FROM || 'MAILER_FROM',
 		options: {

@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'shs';
-	var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'ui.utils', 'spotify', 'uiGmapgoogle-maps', 'ngCkeditor'];
+	var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'ui.utils', 'spotify', 'uiGmapgoogle-maps', 'ngCkeditor', 'angularPayments'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {

@@ -90,8 +90,8 @@ exports.oauthCallback = function(strategy) {
 				if (err) {
 					return res.redirect('/#!/signin');
 				}
-
-				return res.redirect(redirectURL || '/');
+				// needed to add hashbang because google was redirecting to /#
+				return res.redirect(redirectURL || '/#!/');
 			});
 		})(req, res, next);
 	};

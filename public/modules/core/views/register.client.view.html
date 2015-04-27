@@ -1,0 +1,44 @@
+<section data-ng-controller="RegisterController">
+	<h1>{{ register }}</h1>
+	<div class="col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6">
+		<form stripe-form="stripeCallback">
+			<fieldset>
+				<div class="form-group col-xs-5">
+					<label for="firstName">First Name</label>
+					<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name">
+				</div>
+				<div class="form-group col-xs-7">
+					<label for="lastName">Last Name</label>
+					<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name">
+				</div>
+				<div class="form-group col-xs-12">
+					<label>Billing Address</label>
+					<input type="text" id="addressStreet" name="addressStreet" class="form-control" data-ng-model="user.address.street" placeholder="Street">
+				</div>
+				<div class="form-group col-xs-12">
+					<input type="text" id="addressCity" name="addressCity" class="form-control" data-ng-model="user.address.city" placeholder="City">
+				</div>
+				<div class="form-group col-xs-4">
+					<input type="text" id="addressState" name="addressState" class="form-control" data-ng-model="user.address.state" placeholder="State">
+				</div>
+				<div class="form-group col-xs-8">
+					<input type="text" id="addressZip" name="addressZip" class="form-control" data-ng-model="user.address.zip" placeholder="Zip">
+				</div>				<div class="form-group col-xs-12">
+					<label for="card-number">Card #</label>
+					<input name="card-number" class="form-control" ng-model="number" placeholder="Card Number" payments-format="card" payments-validate="card" />
+				</div>
+				<div class="form-group col-xs-4">
+					<label for="card-expire">Exp.</label>
+					<input name="card-expire" class="form-control" ng-model="expiry" placeholder="Expiration" payments-format="expiry" payments-validate="expiry" />
+				</div>
+				<div class="form-group col-xs-4">
+					<label for="card-cvc">CVC Code</label>
+					<input name="card-cvc" class="form-control" ng-model="cvc" placeholder="CVC" payments-format="cvc" payments-validate="cvc" />
+				</div>
+				<div class="col-xs-12 text-center">
+					<button class="btn btn-primary" type="submit">Submit</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</section>
