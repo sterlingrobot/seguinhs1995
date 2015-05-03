@@ -88,6 +88,9 @@ var UserSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	registration: {
+		type: Object
+	},
 	/* For reset password */
 	resetPasswordToken: {
 		type: String

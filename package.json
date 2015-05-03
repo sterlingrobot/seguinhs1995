@@ -45,6 +45,7 @@
     "passport-local": "~1.0.0",
     "passport-spotify": "^0.2.0",
     "passport-twitter": "~1.0.2",
+    "stripe": "^3.3.4",
     "swig": "~1.4.1"
   },
   "devDependencies": {
