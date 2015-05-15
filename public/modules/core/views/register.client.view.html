@@ -1,15 +1,57 @@
 <section data-ng-controller="RegisterController">
-	<div ng-hide="{{ registration.status === 'succeeded' }}">
+	<div class="col-sm-8 col-sm-offset-2 text-center"
+		data-ng-show="{{ registration.registered }}">
+		<h2>You're registered!!</h2>
+		<div class="col-sm-10 col-sm-offset-1 text-left">
+			<h4>Registration Details:</h4>
+			<ul>
+				<li>Number of People: <b>{{ registration.guests }}</b>
+					<a href="" ng-click="showGuests = !showGuests">Change</a>
+				</li>
+				<li>Pa: <b>{{  registration.created * 1000 | date:'medium' }}</b></li>
+				<li>Total Paid: <b>{{ registration.amount / 100 | currency }}</b></li>
+				<li>
+					<ul data-ng-repeat="payments in registration.payments">
+						<li>Paid: {{ payment.amount }} on {{ payment.created | date:'medium' }}</li>
+					</ul>
+				</li>
+			</ul>
+			<div data-ng-show="showGuests">
+				<form stripe-form="stripeCallback">
+					<fieldset>
+						<div class="form-group col-sm-12">
+							<label class="col-sm-8 text-right" for="guests">Number of People Attending</label>
+							<div class="col-sm-4">
+								<input type="number" id="changeGuests" name="changeGuests" class="form-control" data-ng-model="guests" min="1" step="1">
+							</div>
+						</div>
+						<div class="col-sm-10 col-sm-offset-1 text-right">
+							<h4>Total: {{ guests * price/100 | currency }}</h4>
+							<h4>Paid to date: {{ registration.amount / 100 | currency }}</h4>
+							<h4>Total due: <b>{{ (guests * price/100 - registration.amount/100) | currency }}</b></h4>
+						</div>
+						<div class="form-group col-sm-4 submitCC">
+							<button class="btn btn-primary pull-right" type="submit">Submit</button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div ng-hide="{{ registration.registered }}">
 		<h1 class="register-heading text-center">Buy Tickets</h1>
 	    <div ng-if="error.message" ng-class="['error', 'alert', error.level]" ng-bind="error.message"></div>
 		<div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
 			<form stripe-form="stripeCallback">
 				<fieldset>
 					<div class="form-group col-sm-12">
-						<label class="col-sm-8 text-right" for="guests">Number of Guests Attending</label>
+						<label class="col-sm-8 text-right" for="guests">Number of People Attending</label>
 						<div class="col-sm-4">
-							<input type="number" id="guests" name="guests" class="form-control" data-ng-model="guests" placeholder="#">
+							<input type="number" id="guests" name="guests" class="form-control" data-ng-model="guests" placeholder="#" min="1" step="1">
 						</div>
+					</div>
+					<div class="col-sm-10 col-sm-offset-1 text-right">
+						<h4>Total: {{ guests * price/100 | currency }}</h4>
 					</div>
 					<hr class="col-sm-12">
 					<div class="form-group col-sm-12">
@@ -47,17 +89,6 @@
 					</div>
 				</fieldset>
 			</form>
-		</div>
-	</div>
-	<div class="col-sm-8 col-sm-offset-2 text-center"
-		data-ng-show="{{ registration.status === 'succeeded' }}">
-		<h2>You're registered!!</h2>
-		<div class="col-sm-6 col-sm-offset-3 text-left">
-			<h4>Registration Details:</h4>
-			<ul>
-				<li>Number of Guests: {{ registration.metadata.guests }}</li>
-				<li>Total Paid: {{ registration.amount / 100 | currency }}</li>
-			</ul>
 		</div>
 	</div>
 </section>

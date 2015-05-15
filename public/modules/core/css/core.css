@@ -68,6 +68,18 @@
 	text-transform: uppercase;
 	letter-spacing: 1px;
 }
+input[type="number"] {
+	text-align: right;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    margin-left: 10px;
+}
+input[name="guests"],
+input[name="changeGuests"] {
+	font-size: 150%;
+	height: 150%;
+}
 .submitCC {
 	margin-top: 25px;
 }
