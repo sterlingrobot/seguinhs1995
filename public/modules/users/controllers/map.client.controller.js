@@ -50,6 +50,10 @@ angular.module('users').controller('MapController', ['$scope', '$log', '$http', 
         function locationFinder() {
             var locations = [];
 
+            Users.query()
+                .then(function(data) {
+                    $log.log(data);
+                });
             return $http.get('modules/users/json/users.json');
 
         }

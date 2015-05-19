@@ -1,117 +1,117 @@
 <section data-ng-controller="HomeController">
-	<div class="row bkgnd">
-	</div>
-	<div class="jumbotron text-center">
-		<div class="row" data-ng-show="authentication.user">
-			<div class="col-sm-10 col-sm-offset-1 col-xs-12">
-				<h2>Welcome back, {{ authentication.user.firstName }}</h2>
-				<h1 class="countdown">It happens in {{ counter }} days.</h1>
-				<a class="btn btn-default btn-outline" href="/#!/register">Get tickets</a>
-			</div>
-		</div>
-		<div class="row" data-ng-controller="AuthenticationController" data-ng-hide="authentication.user">
-			<h1>Welcome, Matador</h1>
-			<h3 class="col-md-12 text-center" data-ng-hide="emailSignup">Sign up with your social account</h3>
-			<div class="col-md-12 text-center" data-ng-hide="emailSignup">
-				<a href="/auth/facebook" class="undecorated-link">
-					<img class="social-btn" src="/modules/users/img/buttons/facebook.png" height="80">
-				</a>
-				<a href="/auth/twitter" class="undecorated-link">
-					<img class="social-btn" src="/modules/users/img/buttons/twitter.png" height="80">
-				</a>
-				<a href="/auth/google" class="undecorated-link">
-					<img class="social-btn" src="/modules/users/img/buttons/google.png" height="80">
-				</a>
-				<a href="/auth/linkedin" class="undecorated-link">
-					<img class="social-btn" src="/modules/users/img/buttons/linkedin.png" height="80">
-				</a>
-			</div>
-			<div class="col-xs-offset-1 col-xs-10 col-md-offset-3 col-md-6" data-ng-show="emailSignup">
-				<form name="userForm" data-ng-submit="signup()" class="signin" novalidate autocomplete="off">
-					<fieldset>
-						<div class="form-group col-sm-5">
-							<label for="firstName">First Name</label>
-							<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="credentials.firstName" placeholder="First Name">
-						</div>
-						<div class="form-group col-sm-7">
-							<label for="lastName">Last Name</label>
-							<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="credentials.lastName" placeholder="Last Name">
-						</div>
-						<div class="form-group col-sm-12">
-							<label for="email">Email</label>
-							<input type="email" id="email" name="email" class="form-control" data-ng-model="credentials.email" placeholder="Email">
-						</div>
-						<div class="form-group col-sm-12">
-							<label for="password">Password</label>
-							<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
-						</div>
-						<div data-ng-show="error" class="clearfix">
-							<div class="alert alert-warning text-center">
-								<strong data-ng-bind="error"></strong>
-							</div>
-						</div>
-						<div class="text-center">
-							<button type="submit" class="btn btn-large btn-primary">Sign up</button>
-							&nbsp; or&nbsp;
-							<a class="inverse" href="/#!/signin" class="show-signup">Sign in</a>
-						</div>
-					</fieldset>
-				</form>
-			</div>
-		</div>
-		<h3 class="col-md-12 text-center" data-ng-hide="authentication.user">or use your <a class="btn btn-sm btn-default btn-outline" href="" data-ng-click="toggleForm()">{{ emailSignup ? 'Social Account' : 'Email' }}</a></h3>
-	</div>
-	<section data-ng-init="findRecent()" class="clearfix" data-ng-show="authentication.user">
-		<h3 class="text-left">The Latest News...</h3>
-		<div class="list-group">
-			<a data-ng-repeat="article in articles" data-ng-href="#!/articles/{{article._id}}" class="list-group-item">
-				<h4 class="list-group-item-heading text-left" data-ng-bind="article.title"></h4>
-				<p class="list-group-item-text" data-ng-bind-html="article.content"></p>
-				<small class="list-group-item-text">
-					Posted on
-					<span data-ng-bind="article.created | date:'mediumDate'"></span>
-					by
-					<span data-ng-bind="article.user.displayName"></span>
-				</small>
-			</a>
-		</div>
-		<div class="alert alert-warning text-center" data-ng-if="articles.$resolved && !articles.length">
-			No posts yet, why don't you <a href="/#!/articles/create">create one</a>?
-		</div>
-	</section>
-
-	<section>
-		<div class="row" data-ng-show="authentication.user">
-			<div class="col-md-3 col-lg-3">
-				<a href="">
-					<img src="">
-					<h4>The Venue</h4>
-				</a>
-				<p>It's party time.  With things to put in your pie hole while you talk about all
-					the cool things you do now, like coaching little league and shit.</p>
-			</div>
-			<div class="col-md-3 col-lg-3">
-				<a href="#!/tracks">
-					<img src="">
-					<h4>The Playlist</h4>
-				</a>
-				<p>Ohhh ye-ahh.  Add your fave hits from back in the day, and we'll kick this thing
-					old school style.</p>
-			</div>
-			<div class="col-md-3 col-lg-3">
-				<a href="#!/map">
-					<img src="">
-					<h4>The Map</h4>
-				</a>
-				<p>Where the hell did everybody go?  Or are they still holding it down in the
-					home town?  Find out, and add your pin too.</p>
-			</div>
-			<div class="col-md-3 col-lg-3">
-				<a href="">
-					<img src="">
-					<h4>The SWAG</h4>
-				</a>
-			</div>
-		</div>
-	</section>
+    <div class="row bkgnd">
+    </div>
+    <div class="jumbotron text-center">
+        <div class="row" data-ng-show="authentication.user">
+            <div class="col-sm-10 col-sm-offset-1 col-xs-12">
+                <h2>Welcome back, {{ authentication.user.firstName }}</h2>
+                <h1 class="countdown">It happens in {{ counter }} days.</h1>
+                <a class="btn btn-default btn-outline" href="/#!/register">Get tickets</a>
+            </div>
+        </div>
+        <div class="row" data-ng-controller="AuthenticationController" data-ng-hide="authentication.user">
+            <h1>Welcome, Matador</h1>
+            <h3 class="col-md-12 text-center" data-ng-hide="emailSignup">Sign up with your social account</h3>
+            <div class="col-md-12 text-center" data-ng-hide="emailSignup">
+                <a href="/auth/facebook" class="undecorated-link">
+                <img class="social-btn" src="/modules/users/img/buttons/facebook.png" height="80">
+                </a>
+                <a href="/auth/twitter" class="undecorated-link">
+                <img class="social-btn" src="/modules/users/img/buttons/twitter.png" height="80">
+                </a>
+                <a href="/auth/google" class="undecorated-link">
+                <img class="social-btn" src="/modules/users/img/buttons/google.png" height="80">
+                </a>
+                <a href="/auth/linkedin" class="undecorated-link">
+                <img class="social-btn" src="/modules/users/img/buttons/linkedin.png" height="80">
+                </a>
+            </div>
+            <h3 class="col-md-12 text-center" data-ng-show="emailSignup">Sign up with your Email</h3>
+            <div class="col-xs-offset-1 col-xs-10 col-md-offset-3 col-md-6" data-ng-show="emailSignup">
+                <form name="userForm" data-ng-submit="signup()" class="signin" novalidate autocomplete="off">
+                    <fieldset>
+                        <div class="form-group col-sm-5">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="credentials.firstName" placeholder="First Name">
+                        </div>
+                        <div class="form-group col-sm-7">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="credentials.lastName" placeholder="Last Name">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" data-ng-model="credentials.email" placeholder="Email">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+                        </div>
+                        <div data-ng-show="error" class="clearfix">
+                            <div class="alert alert-warning text-center">
+                                <strong data-ng-bind="error"></strong>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-large btn-primary">Sign up</button>
+                            &nbsp; or&nbsp;
+                            <a class="inverse" href="/#!/signin" class="show-signup">Sign in</a>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <h3 class="col-md-12 text-center" data-ng-hide="authentication.user">or use your <a class="btn btn-sm btn-default btn-outline" href="" data-ng-click="toggleForm()">{{ emailSignup ? 'Social Account' : 'Email' }}</a></h3>
+    </div>
+    <section data-ng-init="findRecent()" class="clearfix" data-ng-show="authentication.user">
+        <h3 class="text-left">The Latest News...</h3>
+        <div class="list-group">
+            <a data-ng-repeat="article in articles" data-ng-href="#!/articles/{{article._id}}" class="list-group-item">
+            <h4 class="list-group-item-heading text-left" data-ng-bind="article.title"></h4>
+            <p class="list-group-item-text" data-ng-bind-html="article.content"></p>
+            <small class="list-group-item-text">
+            Posted on
+            <span data-ng-bind="article.created | date:'mediumDate'"></span>
+            by
+            <span data-ng-bind="article.user.displayName"></span>
+            </small>
+            </a>
+        </div>
+        <div class="alert alert-warning text-center" data-ng-if="articles.$resolved && !articles.length">
+            No posts yet, why don't you <a href="/#!/articles/create">create one</a>?
+        </div>
+    </section>
+    <section>
+        <div class="row" data-ng-show="authentication.user">
+            <div class="col-md-3 col-lg-3">
+                <a href="">
+                <img src="">
+                <h4>The Venue</h4>
+                </a>
+                <p>It's party time.  With things to put in your pie hole while you talk about all
+                the cool things you do now, like coaching little league and shit.</p>
+            </div>
+            <div class="col-md-3 col-lg-3">
+                <a href="#!/tracks">
+                <img src="">
+                <h4>The Playlist</h4>
+                </a>
+                <p>Ohhh ye-ahh.  Add your fave hits from back in the day, and we'll kick this thing
+                old school style.</p>
+            </div>
+            <div class="col-md-3 col-lg-3">
+                <a href="#!/map">
+                <img src="">
+                <h4>The Map</h4>
+                </a>
+                <p>Where the hell did everybody go?  Or are they still holding it down in the
+                home town?  Find out, and add your pin too.</p>
+            </div>
+            <div class="col-md-3 col-lg-3">
+                <a href="">
+                <img src="">
+                <h4>The SWAG</h4>
+                </a>
+            </div>
+        </div>
+    </section>
 </section>

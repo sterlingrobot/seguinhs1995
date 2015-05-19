@@ -32,7 +32,7 @@ exports.charge = function(req, res, next) {
 
 		// User already has a Stripe customer id, assign it to this charge
 		chg = _.extend(chg, { customer: user.registration.customer });
-		processCharge();
+		processCharge(chg);
 
 	} else {
 
@@ -77,7 +77,7 @@ exports.charge = function(req, res, next) {
 		);
 	}
 
-	function processCharge() {
+	function processCharge(chg) {
 
 		stripe.charges.create(chg, function(err, charge) {
 

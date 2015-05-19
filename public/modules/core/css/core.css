@@ -68,6 +68,9 @@
 	text-transform: uppercase;
 	letter-spacing: 1px;
 }
+.forgot-password {
+	margin-top: 20px;
+}
 input[type="number"] {
 	text-align: right;
 }

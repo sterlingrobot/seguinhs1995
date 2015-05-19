@@ -32,9 +32,11 @@ angular.module('core').controller('RegisterController', ['$scope', '$window', '$
 
 			// First we get a token from the card details that created our customer
 		    if (result.error) {
+				$log.log(result);
 				$scope.error.level = 'alert-warning';
 				$scope.error.message = result.error.message;
 				$timeout(function() { $scope.error = {}; }, 5000);
+
 		    } else {
 
 		    	// Update the user with address details if provided
