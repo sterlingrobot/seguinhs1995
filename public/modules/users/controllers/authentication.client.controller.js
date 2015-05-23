@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('users').controller('AuthenticationController', ['$scope', '$http', '$location', 'Authentication',
-	function($scope, $http, $location, Authentication) {
+angular.module('users').controller('AuthenticationController',
+	['$scope', '$http', '$location', '$timeout', 'Authentication',
+	function($scope, $http, $location, $timeout, Authentication) {
 		$scope.authentication = Authentication;
 
 		// If user is signed in then redirect back home
@@ -16,6 +17,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				$location.path('/');
 			}).error(function(response) {
 				$scope.error = response.message;
+				$timeout(function() { $scope.error = ''; }, 3000);
 			});
 		};
 
@@ -28,6 +30,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				$location.path('/');
 			}).error(function(response) {
 				$scope.error = response.message;
+				$timeout(function() { $scope.error = ''; }, 3000);
 			});
 		};
 	}
