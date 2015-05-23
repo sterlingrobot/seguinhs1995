@@ -16,3 +16,18 @@
 }
 
 .angular-google-map-container { height: 95vh; }
+
+.allow-pin {
+	position: fixed;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    width: 50%;
+    box-shadow: 0 10px 15px -5px;
+}
+
+.allow-notice {
+	padding: 5px;
+	text-align: center;
+}

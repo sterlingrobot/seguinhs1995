@@ -1,4 +1,17 @@
 <div id="map_canvas" ng-controller="MapController">
+	<div class="allow-notice" ng-if="user.address && !user.address.allowMapPin">
+		You're not on allowing your city to be shown on the map.
+		<a href="" ng-click="allowPin(true)">Allow my pin</a>
+	</div>
+	<div class="allow-notice" ng-if="user.address && user.address.allowMapPin">
+		You're allowing your city to be shown on the map.
+		<a href="" ng-click="allowPin(false)">Remove my pin</a>
+	</div>
+    <div class="allow-pin alert text-center" ng-if="error.message" ng-class="['alert-'+error.level]">
+    	<div ng-bind-html="error.message"></div>
+    	<button ng-if="error.message" class="btn btn-warning col-sm-4 col-sm-offset-1" ng-click="allowPin(false)">No</button>
+		<button ng-if="error.message" class="btn btn-primary col-sm-4 col-sm-offset-2" ng-click="allowPin(true)">Yes</button>
+    </div>
     <ui-gmap-google-map
     	center="map.center"
     	zoom="map.zoom"

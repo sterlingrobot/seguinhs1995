@@ -10,6 +10,44 @@ var _ = require('lodash'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User');
 
+var processCharge = function(chg) {
+
+ 	return stripe.charges.create(chg, function(err, charge) {
+
+		if(err) return err;
+
+		return charge;
+
+	});
+};
+
+var updateUser = function(id, charge) {
+
+	User.findOne({
+			_id: id
+		}, function(err, user) {
+			if(user) {
+				user.registration = user.registration || {};
+				user.registration.registered = true;
+				user.registration.guests = charge.metadata.guests;
+				user.registration.payments = user.registration.payments || [];
+				user.registration.payments.push(charge);
+				user.save(function(err) {
+					if (err) {
+						return res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+						return res.jsonp(user);
+					}
+				});
+			} else {
+				res.status(400).send({
+					message: 'User id did not match any existing user'
+				});
+			}
+		});
+};
 
 exports.charge = function(req, res, next) {
 
@@ -32,7 +70,10 @@ exports.charge = function(req, res, next) {
 
 		// User already has a Stripe customer id, assign it to this charge
 		chg = _.extend(chg, { customer: user.registration.customer });
-		processCharge(chg);
+		processCharge(chg)
+			.success(function(data) {
+				updateUser(user._id, data);
+			});
 
 	} else {
 
@@ -70,48 +111,17 @@ exports.charge = function(req, res, next) {
 					});
 
 					chg = _.extend(chg, { customer: customer.id });
-					processCharge();
+					processCharge(chg)
+						.success(function(data) {
+							updateUser(user._id, data);
+						});
 
 				}
 			}
 		);
 	}
 
-	function processCharge(chg) {
 
-		stripe.charges.create(chg, function(err, charge) {
-
-			if (err) {
-				return res.status(400).send(err);
-			} else {
-				User.findOne({
-					_id: req.user._id
-				}, function(err, user) {
-					if(user) {
-						user.registration = user.registration || {};
-						user.registration.registered = true;
-						user.registration.guests = charge.metadata.guests;
-						user.registration.payments = user.registration.payments || [];
-						user.registration.payments.push(charge);
-						user.save(function(err) {
-							if (err) {
-								return res.status(400).send({
-									message: errorHandler.getErrorMessage(err)
-								});
-							} else {
-								return res.jsonp(user);
-							}
-						});
-					} else {
-						res.status(400).send({
-							message: 'User id did not match any existing user'
-						});
-					}
-				});
-			}
-
-		});
-	}
 
 
 };

@@ -52,8 +52,7 @@ var UserSchema = new Schema({
 	},
 	address: {
 		type: Object,
-		trim: true,
-		default: ''
+		default: {}
 	},
 	phone: {
 		type: String,
