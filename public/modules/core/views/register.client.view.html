@@ -8,11 +8,9 @@
 				<li>Number of People: <b>{{ registration.guests }}</b>
 					<a href="" ng-click="showGuests = !showGuests">Change</a>
 				</li>
-				<li>Pa: <b>{{  registration.created * 1000 | date:'medium' }}</b></li>
-				<li>Total Paid: <b>{{ registration.amount / 100 | currency }}</b></li>
-				<li>
-					<ul data-ng-repeat="payments in registration.payments">
-						<li>Paid: {{ payment.amount }} on {{ payment.created | date:'medium' }}</li>
+				<li>Payments:
+					<ul>
+						<li data-ng-repeat="payment in registration.payments">Paid: {{ payment.amount / 100 | currency }} on {{ payment.created*1000 | date:'medium' }}</li>
 					</ul>
 				</li>
 			</ul>
@@ -22,13 +20,13 @@
 						<div class="form-group col-sm-12">
 							<label class="col-sm-8 text-right" for="guests">Number of People Attending</label>
 							<div class="col-sm-4">
-								<input type="number" id="changeGuests" name="changeGuests" class="form-control" data-ng-model="guests" min="1" step="1">
+								<input type="number" id="changeGuests" name="changeGuests" class="form-control" data-ng-model="additionalGuests" min="1" step="1">
 							</div>
 						</div>
 						<div class="col-sm-10 col-sm-offset-1 text-right">
 							<h4>Total: {{ guests * price/100 | currency }}</h4>
-							<h4>Paid to date: {{ registration.amount / 100 | currency }}</h4>
-							<h4>Total due: <b>{{ (guests * price/100 - registration.amount/100) | currency }}</b></h4>
+							<h4>Paid to date: {{ paidToDate() / 100 | currency }}</h4>
+							<h4>Total due: <b>{{ (guests * price/100 - paidToDate() / 100) | currency }}</b></h4>
 						</div>
 						<div class="form-group col-sm-4 submitCC">
 							<button class="btn btn-primary pull-right" type="submit">Submit</button>

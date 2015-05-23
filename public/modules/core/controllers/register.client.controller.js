@@ -45,13 +45,9 @@ angular.module('core').controller('RegisterController', ['$scope', '$window', '$
 				$scope.user.address.state = $scope.addressState;
 				$scope.user.address.zip = $scope.addressZip;
 
-		    	var paidToDate = $scope.registration ?
-			    	$scope.registration.payments.reduce(function(total, pmt) {
-					  return total + pmt.amount;
-					}) : 0;
 		    	var payment = new Payments({
 		    		user: $scope.user,
-		    		amount: $scope.guests * $scope.price - paidToDate,
+		    		amount: $scope.guests * $scope.price - $scope.paidToDate(),
 		    		token: result.id,
 		    		guests: $scope.guests
 		    	});
@@ -67,6 +63,13 @@ angular.module('core').controller('RegisterController', ['$scope', '$window', '$
 					$timeout(function() { $scope.error = {}; }, 5000);
 				});
 		    }
+		};
+
+		$scope.paidToDate = function() {
+			return $scope.registration ?
+		    	$scope.registration.payments.reduce(function(total, pmt) {
+				  return total + pmt.amount;
+				}) : 0;
 		};
 	}
 ]);
