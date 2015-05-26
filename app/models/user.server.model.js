@@ -51,7 +51,7 @@ var UserSchema = new Schema({
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 	address: {
-		type: Object,
+		type: Schema.Types.Mixed,
 		default: {}
 	},
 	phone: {
@@ -97,7 +97,7 @@ var UserSchema = new Schema({
   	resetPasswordExpires: {
   		type: Date
   	}
-});
+}, { minimize: false });
 
 /**
  * Hook a pre save method to hash the password
