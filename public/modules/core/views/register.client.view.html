@@ -2,14 +2,27 @@
 	<div class="loader" ng-if="loading">
 		<img src="modules/core/img/loaders/loader.gif">
 	</div>
-	<div class="col-sm-8 col-sm-offset-2 text-center"
-		data-ng-show="{{ user.registration.registered }}">
+    <div ng-if="error.message" ng-class="['error', 'text-center', 'alert', error.level]" ng-bind-html="error.message" ng-click="error = {}" title="Click to Dismiss">
+    </div>
+
+	<div class="col-sm-12 text-center clearfix ticket">
+		<div class="col-sm-7 col-sm-offset-5 text-left">
+			<h2>Class of 1995</h2>
+			<h3>20th Reunion</h3>
+			<h4>October 10, 2015</h4>
+			<hr>
+			<h2 class="admit" data-ng-show="{{ user.registration.registered }}">ADMIT {{ user.registration.guests }}</h2>
+			<h2 class="admit" data-ng-hide="{{ user.registration.registered }}">Reserve your spot</h2>
+		</div>
+	</div>
+
+	<div class="col-sm-8 col-sm-offset-2 clearfix text-center" ng-show="user.registration.registered">
 		<h2>You're registered!!</h2>
 		<div class="col-sm-10 col-sm-offset-1 text-left">
 			<h4>Registration Details:</h4>
 			<ul>
 				<li>Number of People: <b>{{ user.registration.guests }}</b>
-					<a href="" ng-click="showGuests = !showGuests">Change</a>
+					<a href="" ng-click="showForm = true;" ng-hide="showForm">Change</a>
 				</li>
 				<li>Payments:
 					<ul>
@@ -17,81 +30,104 @@
 					</ul>
 				</li>
 			</ul>
-			<div data-ng-show="showGuests">
-				<form stripe-form="stripeCallback">
-					<fieldset>
-						<div class="form-group col-sm-12">
-							<label class="col-sm-8 text-right" for="guests">Number of People Attending</label>
-							<div class="col-sm-4">
-								<input type="number" id="changeGuests" name="guests" class="form-control" data-ng-model="guests" min="1" step="1">
-							</div>
-						</div>
-						<div class="col-sm-10 col-sm-offset-1 text-right">
-							<h4>Total: {{ guests * price/100 | currency }}</h4>
-							<h4>Paid to date: {{ paidToDate() / 100 | currency }}</h4>
-							<h4>Total due: <b>{{ (guests * price/100 - paidToDate() / 100) | currency }}</b></h4>
-						</div>
-						<div class="form-group col-sm-4 col-sm-offset-4 submitCC">
-							<button class="btn btn-primary pull-right" type="submit">Submit</button>
-						</div>
-					</fieldset>
-				</form>
+			<div class="text-right" ng-show="guests * price - paidToDate() > 0">
+				<hr>
+				<h4>Due at the Door: <b>{{ (guests - (paidToDate() / 2500)) * 30 | currency }}</b></h4>
+				<h4>or Pay in Advance: <b>{{ (guests * price/100 - paidToDate() / 100) | currency }}</b>
+				<a href="" ng-click="showForm = true; payNow = true;" ng-hide="showForm && payNow">Pay Now</a></h4>
 			</div>
-			<p class="text-center">Please contact us at <a href="mailto:seguinhs1995@gmail.com">seguinhs1995@gmail.com</a>
-				if you need assistance modifying your registration.</p>
 		</div>
 	</div>
-	<div ng-hide="{{ user.registration.registered }}">
-		<h1 class="register-heading text-center">Buy Tickets</h1>
-	    <div ng-if="error.message" ng-class="['error', 'alert', error.level]" ng-bind="error.message"></div>
-		<div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
-			<form stripe-form="stripeCallback">
-				<fieldset>
-					<div class="form-group col-sm-12">
-						<label class="col-sm-8 text-right" for="guests">Number of People Attending</label>
-						<div class="col-sm-4">
-							<input type="number" id="guests" name="guests" class="form-control" data-ng-model="guests" placeholder="#" min="1" step="1">
-						</div>
+	<div class="well col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 clearfix"
+		ng-show="showForm || !user.registration.registered">
+		<form name="registrationForm" stripe-form="stripeCallback" novalidate>
+			<fieldset>
+				<div class="form-group clearfix">
+					<label class="col-xs-8 text-right" for="guests">
+						Number of People Attending<br>
+						<small><em>Spouses & S.O.'s welcome!</em></small>
+					</label>
+					<div class="col-xs-4">
+						<input type="number" id="guests" name="guests" class="form-control" data-ng-model="guests" placeholder="#" min="1" step="1">
 					</div>
-					<div class="col-sm-10 col-sm-offset-1 text-right">
-						<h4>Total: {{ guests * price/100 | currency }}</h4>
-					</div>
-					<hr class="col-sm-12">
+				</div>
+				<div class="btn-group pay-toggle" data-toggle="buttons">
+					<label class="btn btn-lg" ng-class="{active:payNow, 'btn-info':payNow, 'btn-default':!payNow}" >
+						<input type="radio" ng-click="payNow = true; showForm = true;">
+						<b>Buy Tickets</b>
+						<span class="hidden-xs"><br><small>Pay Now for <b>{{ guests * price/100 | currency }}</b></small></span>
+					</label>
+					<label class="btn btn-lg" ng-class="{active:!payNow && showForm, 'btn-info':!payNow && showForm, 'btn-default':!showForm || payNow}" >
+						<input type="radio" ng-click="payNow = false; showForm = true;">
+						<b>Just RSVP</b>
+						<span class="hidden-xs"><br><small>Pay at the Door for <b>{{ guests * 30 | currency }}</b></small></span>
+					</label>
+				</div>
+				<div class="visible-xs text-center">
+					<h3 ng-if="payNow"><br>Pay Now for <b>$25</b></h3>
+					<h3 ng-if="!payNow && showForm"><br>Pay at the Door for <b>$30</b></h3>
+				</div>
+				<div ng-model="payNow"></div>
+				<hr class="col-sm-12">
+				<div ng-show="showForm">
 					<div class="form-group col-sm-12">
 						<label for="name">Name</label>
-						<input type="text" id="name" name="name" class="form-control" data-ng-model="name" placeholder="Name">
+						<input type="text" id="name" name="name" class="form-control" data-ng-model="name" placeholder="Name" required>
 					</div>
 					<div class="form-group col-sm-12">
-						<label>Billing Address</label>
-						<input type="text" id="addressLine1" name="addressLine1" class="form-control" data-ng-model="addressLine1" placeholder="Street">
+						<label>Mailing Address</label>
+						<input type="text" id="addressLine1" name="addressLine1" class="form-control" data-ng-model="addressLine1" placeholder="Street" required>
 					</div>
 					<div class="form-group col-sm-12">
-						<input type="text" id="addressCity" name="addressCity" class="form-control" data-ng-model="addressCity" placeholder="City">
+						<input type="text" id="addressCity" name="addressCity" class="form-control" data-ng-model="addressCity" placeholder="City" required>
 					</div>
 					<div class="form-group col-sm-4">
-						<input type="text" id="addressState" name="addressState" class="form-control" data-ng-model="addressState" placeholder="State">
+						<input type="text" id="addressState" name="addressState" class="form-control" data-ng-model="addressState" placeholder="State" required>
 					</div>
 					<div class="form-group col-sm-8">
-						<input type="text" id="addressZip" name="addressZip" class="form-control" data-ng-model="addressZip" placeholder="Zip">
+						<input type="text" id="addressZip" name="addressZip" class="form-control" data-ng-model="addressZip" placeholder="Zip" required>
 					</div>
+				</div>
+				<div ng-show="payNow">
 					<hr class="col-sm-12">
 					<div class="form-group col-sm-12">
 						<label for="card-number">Card Number</label>
-						<input name="card-number" class="form-control" ng-model="number" placeholder="Number" payments-format="card" payments-validate="card" />
+						<input name="card-number" class="form-control" ng-model="number" placeholder="Number" payments-format="card" payments-validate="card" required />
 					</div>
 					<div class="form-group col-sm-4 col-xs-7">
 						<label for="card-expire">Expires</label>
-						<input name="card-expire" class="form-control" ng-model="expiry" placeholder="Exp" payments-format="expiry" payments-validate="expiry" />
+						<input name="card-expire" class="form-control" ng-model="expiry" placeholder="Exp" payments-format="expiry" payments-validate="expiry" required />
 					</div>
 					<div class="form-group col-sm-4 col-xs-5">
 						<label for="card-cvc">CVC Code</label>
-						<input name="card-cvc" class="form-control" ng-model="cvc" placeholder="CVC" payments-format="cvc" payments-validate="cvc" />
+						<input name="card-cvc" class="form-control" ng-model="cvc" placeholder="CVC" payments-format="cvc" payments-validate="cvc" required />
 					</div>
-					<div class="form-group col-sm-4 submitCC">
-						<button class="btn btn-primary pull-right" type="submit">Submit</button>
+					<div class="col-sm-10 col-sm-offset-2 text-right">
+						<h4>Total: {{ guests * price/100 | currency }}</h4>
+						<h4>Paid to date: {{ paidToDate() / 100 | currency }}</h4>
+						<h4>Total due: <b>{{ (guests * price/100 - paidToDate() / 100) | currency }}</b></h4>
 					</div>
-				</fieldset>
-			</form>
-		</div>
+				</div>
+				<div class="form-group col-sm-4 col-sm-offset-8 submitCC" ng-show="payNow">
+					<button class="btn btn-primary pull-right" type="submit" ng-disabled="registrationForm.$invalid" > Purchase </button>
+				</div>
+				<div class="form-group col-sm-4 col-sm-offset-8" ng-show="showForm && !payNow">
+					<button class="btn btn-primary pull-right"
+						ng-disabled="registrationForm.name.$invalid ||
+										registrationForm.addressLine1.$invalid ||
+										registrationForm.addressCity.$invalid ||
+										registrationForm.addressState.$invalid ||
+										registrationForm.addressZip.$invalid"
+						ng-click="processRSVP()"> Submit </button>
+				</div>
+			</fieldset>
+		</form>
 	</div>
+	<div class="col-sm-8 col-sm-offset-2 alert alert-info clearfix text-center register-help"
+		 ng-show="user.registration.registered">
+		<h2 class="col-xs-2"><span class="glyphicon glyphicon-info-sign"></span></h2>
+		<p class="col-xs-10">Please contact us at <a href="mailto:seguinhs1995@gmail.com"><b>seguinhs1995@gmail.com</b></a>
+		if you need assistance modifying your registration.</p>
+	</div>
+
 </section>

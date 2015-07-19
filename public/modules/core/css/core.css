@@ -6,9 +6,9 @@
 	height: 100vh;
 	top: 0;
 	left: 0;
-	background: #333;
+	background: #fefefe;
 	background: rgba(255, 255, 255, 0.8);
-	position: absolute;
+	position: fixed;
 	z-index: 999;
 }
 .loader img {
@@ -103,7 +103,7 @@ input[name="changeGuests"] {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
 	display: none !important;
 }
-.ng-invalid.ng-dirty{
+.ng-invalid.ng-dirty, .ng-invalid {
     border-color:#FA787E;
 }
 .ng-valid.ng-dirty{
@@ -112,8 +112,67 @@ input[name="changeGuests"] {
 .error {
   position: fixed;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
   z-index: 1000;
   box-shadow: 0 6px 20px -10px;
 }
+.ticket {
+	background-size: 100% auto;
+	background: url('../img/ticket.png') no-repeat center top;
+	min-height: 200px;
+	margin: 20px 0;
+}
+.ticket h2, .ticket h3, .ticket h4, .ticket hr {
+	font-family: 'Impact', 'Charcoal', 'Arial Black', sans-serif;
+	margin: 0;
+	text-transform: uppercase;
+}
+.ticket h2 {
+	font-size: 36px;
+	margin-top: 20px;
+}
+.ticket h3 {
+	font-size: 30px;
+}
+.ticket h4 {
+	font-size: 24px;
+}
+/*.ticket h2.admit {
 
+}*/
+/*.submitCC button {
+
+}*/
+
+.pay-toggle {
+	width: 100%;
+}
+.pay-toggle label {
+	width: 50%;
+}
+label[for="guests"] {
+	font-size: 16px;
+}
+label[for="guests"] > small {
+	font-weight: normal;
+}
+.alert.register-help {
+	margin-top: 25px;
+}
+.alert.register-help p {
+	font-size: 16px;
+}
+
+@media (max-width: 768px) {
+	.ticket {
+		background: #F9D53D;
+		padding: 10px;
+	}
+	.ticket > div {
+		text-align: center !important;
+	}
+	.well h3 {
+		margin-top: 0;
+	}
+}

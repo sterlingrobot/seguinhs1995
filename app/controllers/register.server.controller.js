@@ -10,48 +10,6 @@ var _ = require('lodash'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User');
 
-// var processCharge = function(chg) {
-
-//  	stripe.charges.create(chg, function(err, charge) {
-// 		if(err) {
-// 			return res.status(400).send({
-// 				message: errorHandler.getErrorMessage(err)
-// 			});
-// 		}
-// 		// Update user data with address info if provided
-// 		user.address = _.extend(user.address, {
-// 			street: charge.source.address_line1,
-// 			city: charge.source.address_city,
-// 			state: charge.source.address_state,
-// 			zip: charge.source.address_zip
-// 		});
-// 		user.registration = user.registration || {};
-// 		user.registration.registered = true;
-// 		user.registration.guests = charge.metadata.guests;
-// 		user.registration.payments = user.registration.payments || [];
-// 		user.registration.payments.push(charge);
-// 		user.registration.customer = charge.customer;
-// 		user.save(function(err) {
-// 			if (err) {
-// 				return res.status(400).send({
-// 					message: errorHandler.getErrorMessage(err)
-// 				});
-// 			} else {
-// 				return res.jsonp(user);
-// 			}
-// 		});
-// 	});
-// };
-
-// var updateUser = function(user, charge) {
-
-// 	User.findOne({ _id: user._id }, function(err, user) {
-
-// 		// user.save();
-// 		// return user;
-// 	});
-// };
-
 exports.charge = function(req, res, next) {
 
 	var user = req.user,
