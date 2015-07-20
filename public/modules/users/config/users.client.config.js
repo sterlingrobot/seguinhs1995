@@ -34,10 +34,4 @@ angular.module('users').config(['$httpProvider',
         v: '3.17',
         libraries: 'weather,geometry,visualization,places'
     });
-})
-.run(['Menus',
-	function(Menus) {
-		// Set top bar menu item
-		Menus.addMenuItem('topbar', 'The\ Map', 'map', 'item');
-	}
-]);
+});

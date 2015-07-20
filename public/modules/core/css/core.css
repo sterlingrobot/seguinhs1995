@@ -1,6 +1,9 @@
 * {
 	font-family: 'Open Sans', sans-serif;
 }
+.content {
+	min-height: 75vh;
+}
 .loader {
 	width: 100%;
 	height: 100vh;
@@ -15,9 +18,39 @@
 	margin: 50%;
 	transform: translateX(-50%) translateY(-50%);
 }
+.navbar-brand {
+	padding: 0;
+}
+footer {
+	background: #000;
+	color: #fff;
+	padding-bottom: 50px;
+}
+.footer-social-btn {
+	display: block;
+	width: 60px;
+	height: 60px;
+	background: #fff;
+	overflow: hidden;
+	border-radius: 40px;
+	margin: 30px auto 10px;
+	position: relative;
+}
+.footer-social-btn img, .footer-social-btn h1 {
+	position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin: 0;
+}
+.footer-social-btn h1 {
+	margin-top: 2px;
+	margin-left: 1px;
+}
 .bkgnd {
-	background: url(/modules/core/img/class-photo.jpg) no-repeat center top;
 	background-size: cover;
+	background-position: center top;
+	background-repeat: no-repeat;
 	width: 100%;
 	height: 80vh;
 	position: absolute;
@@ -25,12 +58,21 @@
 	left: 15px;
 	z-index: -1;
 }
+.bkgnd.home {
+	background-image: url(/modules/core/img/class-photo.jpg);
+}
+.bkgnd.event {
+	background-image: url(/modules/core/img/power-plant.jpg);
+}
 .container .jumbotron {
 	background-color: #ddd;
 	background-color: rgba(0, 0, 0, 0.6);
 	border-radius: 0;
 	color: #fff;
 	height: 80vh;
+}
+.event-feature {
+	font-size: 16px;
 }
 @media (max-width: 420px) {
 	.bkgnd,

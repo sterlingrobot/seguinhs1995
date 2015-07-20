@@ -30,7 +30,7 @@
 	<meta name="twitter:image" content="/img/brand/logo.png">
 
 	<!-- Fav Icon -->
-	<link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
+	<link href="/modules/core/img/brand/favicon.jpg" rel="shortcut icon" type="image/x-icon">
 
 	<!--Application CSS Files-->
 	{% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">
@@ -50,6 +50,24 @@
 		</section>
 	</section>
 
+	<footer class="text-center clearfix">
+		<div class="col-md-6">
+			<div class="footer-social-btn">
+				<a href="https://www.facebook.com/groups/seguinhsclassof1995" target="_blank">
+					<img src="/modules/users/img/buttons/facebook.png" height="80">
+				</a>
+			</div>
+			Follow our Facebook Page <br> for other news and updates!
+		</div>
+		<div class="col-md-6">
+			<div class="footer-social-btn">
+				<a href="mailto:seguinhs1995@gmail.com">
+					<h1><span class="glyphicon glyphicon-envelope text-danger"></span></h1>
+				</a>
+			</div>
+			Contact us!
+		</div>
+	</footer>
 	<!--Embedding The User Object-->
 	<script type="text/javascript">
 		var user = {{ user | json | safe }};
@@ -57,7 +75,7 @@
 
 	<!--Application JavaScript Files-->
 	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>
-	{% endfor %} 
+	{% endfor %}
 
 	{% if process.env.NODE_ENV === 'development' %}
 	<!--Livereload script rendered -->

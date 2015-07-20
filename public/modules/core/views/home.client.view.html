@@ -1,11 +1,13 @@
 <section data-ng-controller="HomeController">
-    <div class="row bkgnd">
+    <div class="row bkgnd home">
     </div>
     <div class="jumbotron text-center">
         <div class="row" data-ng-show="authentication.user">
             <div class="col-sm-10 col-sm-offset-1 col-xs-12">
                 <h2>Welcome back, {{ authentication.user.firstName }}</h2>
                 <h1 class="countdown">It happens in {{ counter }} days.</h1>
+                <hr>
+                <h2 style="margin-bottom: 20px;">October 10, 2015</h2>
                 <a class="btn btn-default btn-outline" href="/#!/register">Get tickets</a>
             </div>
         </div>
@@ -62,6 +64,43 @@
         </div>
         <h3 class="col-md-12 text-center" data-ng-hide="authentication.user">or use your <a class="btn btn-sm btn-default btn-outline" href="" data-ng-click="toggleForm()">{{ emailSignup ? 'Social Account' : 'Email' }}</a></h3>
     </div>
+    <section>
+        <div class="row" data-ng-show="authentication.user">
+            <div class="col-md-3 col-lg-3 text-center">
+                <a href="#!/event">
+                    <h1><span class="glyphicon glyphicon-calendar"></span></h1>
+                    <h4 class="home-heading">The Event</h4>
+                </a>
+                <p>It's party time.  Get together and talk about all
+                the cool things you do now, like coaching little league and shit.</p>
+            </div>
+            <div class="col-md-3 col-lg-3 text-center">
+                <a href="#!/tracks">
+                    <h1><span class="glyphicon glyphicon-music"></span></h1>
+                    <h4 class="home-heading">The Playlist</h4>
+                </a>
+                <p>Ohhh ye-ahh.  Add your fave hits from back in the day, and we'll kick this thing
+                old school style.</p>
+            </div>
+            <div class="col-md-3 col-lg-3 text-center">
+                <a href="#!/map">
+                    <h1><span class="glyphicon glyphicon-map-marker"></span></h1>
+                    <h4 class="home-heading">The Map</h4>
+                </a>
+                <p>Where the hell did everybody go?  Or are they still holding it down in the
+                home town?  Find out, and add your pin too.</p>
+            </div>
+            <div class="col-md-3 col-lg-3 text-center">
+                <a href="#!/swag">
+                    <h1><span class="glyphicon glyphicon-gift"></span></h1>
+                    <h4 class="home-heading">The SWAG</h4>
+                </a>
+                <p>Proud to be a 95er? Take home a piece of the party with these finely
+                    crafted accessories made especially for you.</p>
+                </a>
+            </div>
+        </div>
+    </section>
     <section data-ng-init="findRecent()" class="clearfix" data-ng-show="authentication.user">
         <h3 class="text-left">The Latest News...</h3>
         <div class="list-group">
@@ -78,43 +117,6 @@
         </div>
         <div class="alert alert-warning text-center" data-ng-if="articles.$resolved && !articles.length">
             No posts yet, why don't you <a href="/#!/articles/create">create one</a>?
-        </div>
-    </section>
-    <section>
-        <div class="row" data-ng-show="authentication.user">
-            <div class="col-md-3 col-lg-3">
-                <a href="#!/event">
-                    <img src="">
-                    <h4>The Event</h4>
-                </a>
-                <p>It's party time.  Get together and talk about all
-                the cool things you do now, like coaching little league and shit.</p>
-            </div>
-            <div class="col-md-3 col-lg-3">
-                <a href="#!/tracks">
-                    <img src="">
-                    <h4>The Playlist</h4>
-                </a>
-                <p>Ohhh ye-ahh.  Add your fave hits from back in the day, and we'll kick this thing
-                old school style.</p>
-            </div>
-            <div class="col-md-3 col-lg-3">
-                <a href="#!/map">
-                    <img src="">
-                    <h4>The Map</h4>
-                </a>
-                <p>Where the hell did everybody go?  Or are they still holding it down in the
-                home town?  Find out, and add your pin too.</p>
-            </div>
-            <div class="col-md-3 col-lg-3">
-                <a href="#!/swag">
-                    <img src="">
-                    <h4>The SWAG</h4>
-                </a>
-                <p>Proud to be a 95er? Take home a piece of the party with these finely
-                    crafted accessories made especially for you.</p>
-                </a>
-            </div>
         </div>
     </section>
 </section>
