@@ -7,14 +7,24 @@ module.exports = {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.min.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
+				'public/lib/ng-ckeditor/ng-ckeditor.css',
+				'//fonts.googleapis.com/css?family=Open+Sans:400,300,700'
 			],
 			js: [
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.min.js',
 				'public/lib/angular-animate/angular-animate.min.js',
+				'public/lib/angular-sanitize/angular-sanitize.min.js',
 				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
 				'public/lib/angular-ui-utils/ui-utils.min.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
+				'public/lib/angular-spotify/dist/angular-spotify.min.js',
+				'public/lib/angular-payments/lib/angular-payments.min.js',
+				'public/lib/lodash/dist/lodash.min.js',
+				'public/lib/angular-google-maps/dist/angular-google-maps.min.js',
+				'public/lib/ng-ckeditor/libs/ckeditor/ckeditor.js',
+				'public/lib/ng-ckeditor/ng-ckeditor.min.js',
+				'https://js.stripe.com/v2/'
 			]
 		},
 		css: 'public/dist/application.min.css',

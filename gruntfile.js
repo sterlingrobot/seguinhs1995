@@ -65,6 +65,18 @@ module.exports = function(grunt) {
 				src: watchFiles.clientCSS
 			}
 		},
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'public',
+                    src: ['**/img/**', '!dist/', '!lib/'],
+                    dest: 'public/dist/img',
+                    flatten: true,
+                    filter: 'isFile'
+                }]
+            }
+        },
 		uglify: {
 			production: {
 				options: {

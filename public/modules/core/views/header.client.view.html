@@ -40,6 +40,9 @@
 					<span data-ng-bind="authentication.user.displayName"></span> <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
+					<li data-ng-show="authentication.user.registration.registered">
+						<a href="/#!/register">My Registration</a>
+					</li>
 					<li>
 						<a href="/#!/settings/profile">Edit Profile</a>
 					</li>
