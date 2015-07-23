@@ -64,7 +64,9 @@ exports.charge = function(req, res, next) {
 		}, function(err, customer) {
 
 			if (err) {
-				return res.status(400).send(err);
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
 			} else {
 
 				chg = _.extend(chg, { customer: customer.id });
