@@ -298,7 +298,7 @@ angular.module('core').controller('RegisterController', ['$scope', '$window', '$
 		$scope.addressZip         = $scope.user.address.zip || '';
 
 		// Define Stripe payments key
-    	$window.Stripe.setPublishableKey('pk_test_KyPkT2u6Ags4pupzDmph9pC7');
+    	$window.Stripe.setPublishableKey('pk_live_oyRzRBuqYlM57kEhO95t7TZX');
 
     	var processCharge = function(token) {
 
@@ -381,7 +381,7 @@ angular.module('core').controller('RegisterController', ['$scope', '$window', '$
 
 				$log.log(result);
 				$scope.error.level = 'alert-warning';
-				$scope.error.message = result.error;
+				$scope.error.message = result.error.message;
 				$timeout(function() { $scope.error = {}; $scope.loading = false; }, 5000);
 
 		    } else {
