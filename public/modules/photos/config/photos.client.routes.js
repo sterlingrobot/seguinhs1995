@@ -7,7 +7,7 @@ angular.module('photos').config(['$stateProvider',
 		$stateProvider.
 		state('listPhotos', {
 			url: '/photos',
-			templateUrl: 'modules/photos/views/list-photos.client.view.html'
+			templateUrl: 'modules/photos/views/photos.client.view.html'
 		}).
 		state('createPhoto', {
 			url: '/photos/create',
