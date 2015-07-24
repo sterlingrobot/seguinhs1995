@@ -1,0 +1,21 @@
+<section ng-controller="PhotosController">
+    <div ng-if="error.message" ng-class="['error', 'alert', error.level]" ng-bind="error.message"></div>
+    <div class="page-header">
+        <h1>The Memes</h1>
+        <p></p>
+    </div>
+    <div>
+        <input class="form-control" type="file" name="fileSelect" ng-model="fileSelect" data-file/>
+    </div>
+    <div id="image-container" style="display:flex;">
+        <canvas id="memeCanvas" width="500" height="500"></canvas>
+        <div>
+            <h3>Give it a good title!</h3>
+            <span>Top Line:</span><br/>
+            <textarea class="form-control" ng-model="topLine" ng-change="redrawMeme()"></textarea><br/>
+            <span>Bottom Line:</span><br/>
+            <textarea class="form-control" ng-model="bottomLine" ng-change="redrawMeme()"></textarea><br/>
+            <button class="btn btn-lg btn-primary" id="saveBtn" ng-click="savePhoto()">Save</button>
+        </div>
+    </div>
+</section>

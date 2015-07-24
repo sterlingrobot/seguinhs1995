@@ -14,16 +14,28 @@ var PhotoSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	title: {
-		type: String,
-		default: '',
-		trim: true,
-		required: 'Title cannot be blank'
-	},
 	content: {
 		type: String,
 		default: '',
+		trim: true,
+		required: 'Photo cannot be blank'
+	},
+	title: {
+		type: String,
+		default: 'Untitled',
 		trim: true
+	},
+	votes: {
+		type: Number,
+		default: 0
+	},
+	upvotes: {
+		type: [Schema.ObjectId],
+		default: []
+	},
+	downvotes: {
+		type: [Schema.ObjectId],
+		default: []
 	},
 	user: {
 		type: Schema.ObjectId,

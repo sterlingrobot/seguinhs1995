@@ -4,6 +4,6 @@
 angular.module('photos').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Photos', 'photos');
+		Menus.addMenuItem('topbar', 'The Memes', 'photos');
 	}
 ]);

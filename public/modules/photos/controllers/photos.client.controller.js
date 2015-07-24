@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('photos').controller('PhotosController', ['$scope', '$log', '$stateParams', '$location', '$anchorScroll', '$timeout', '$sce', 'angularFileUpload', 'Authentication','Photos',
-	function($scope, $log, $stateParams, $location, $anchorScroll, $timeout, $sce, angularFileUpload, Authentication, Photos) {
+angular.module('photos').controller('PhotosController', ['$scope', '$log', '$stateParams', '$location', '$anchorScroll', '$timeout', '$sce', 'Authentication','Photos',
+	function($scope, $log, $stateParams, $location, $anchorScroll, $timeout, $sce, Authentication, Photos) {
 
-		var canvasPhoto;
+		$scope.photos = [];
+		$scope.canvasPhoto = null;
 		$scope.authentication = Authentication;
 		$scope.error = {};
 		$scope.topLine = '';
@@ -14,10 +15,10 @@ angular.module('photos').controller('PhotosController', ['$scope', '$log', '$sta
 	      var canvas = document.getElementById('memeCanvas');
 	      var ctx = canvas.getContext('2d');
 
-		  var topLine = $scope.topLine;
-		  var bottomLine = $scope.bottomLine;
-		  var tpl = topLine.length || 0;
-		  var btl = bottomLine.length || 0;
+      	  var topTextArray = $scope.topLine.split('\n');
+      	  var btmTextArray = $scope.bottomLine.split('\n');
+		  var tpl = topTextArray.reduce(function (a, b) { return a.length > b.length ? a : b; }).length;
+		  var btl = btmTextArray.reduce(function (a, b) { return a.length > b.length ? a : b; }).length;
 
 	      var fontSize1 = Math.min(Math.max( canvas.width * 1.5 / tpl, 24 ), 90);
 	      var fontSize2 = Math.min(Math.max( canvas.width * 1.5 / btl, 24 ), 90);
@@ -28,6 +29,7 @@ angular.module('photos').controller('PhotosController', ['$scope', '$log', '$sta
 
 	      if (image)
 	          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+	      else ctx.drawImage($scope.canvasPhoto, 0, 0, canvas.width, canvas.height);
 
 	      // Text attributes
 	      ctx.textAlign = 'center';
@@ -35,77 +37,41 @@ angular.module('photos').controller('PhotosController', ['$scope', '$log', '$sta
 	      ctx.lineWidth = 2;
 	      ctx.fillStyle = 'white';
 
-	      if (topLine !== null) {
-	      	  topLineText = topLine.replace(/\n/g, '<br>');
-	          ctx.font =  fontSize1 + 'pt Impact';
-	          ctx.fillText(topLine, canvas.width / 2, fontSize1 + 10);
-	          ctx.strokeText(topLine, canvas.width / 2, fontSize1 + 40);
+	      if (topTextArray[0].length > 0) {
+	      	  for(var i = 0; i < topTextArray.length; i++) {
+				  fontSize1 = Math.min(Math.max( canvas.width * 1.5 / topTextArray[i].length, 24 ), 90);
+				  var h = fontSize1 * i;
+	          	  ctx.font =  fontSize1 + 'pt Impact';
+		          ctx.fillText(topTextArray[i], canvas.width / 2, h + fontSize1 + 10);
+		          ctx.strokeText(topTextArray[i], canvas.width / 2, h + fontSize1 + 10);
+	      	  }
 	      }
 
-	      if (bottomLine !== null) {
-	      	  bottomLineText = bottomLine.replace(/\n/g, '<br>');
-	          ctx.font =  fontSize2 + 'pt Impact';
-	          ctx.fillText(bottomLineText, canvas.width / 2, canvas.height - 20);
-	          ctx.strokeText(bottomLineText, canvas.width / 2, canvas.height - 20);
+	      if (btmTextArray[0].length > 0) {
+	      	  for(var j = btmTextArray.length - 1; j > -1; j--) {
+				  fontSize2 = Math.min(Math.max( canvas.width * 1.5 / btmTextArray[j].length, 24 ), 90);
+				  var h2 = fontSize2 * j;
+	          	  ctx.font =  fontSize2 + 'pt Impact';
+				  ctx.fillText(btmTextArray[j], canvas.width / 2, canvas.height - h2 - 20);
+		          ctx.strokeText(btmTextArray[j], canvas.width / 2, canvas.height - h2 - 20);
+	          }
 	      }
 	    };
 
+		$scope.savePhoto = function(data) {
 
-		$scope.saveFile = function() {
-
-	      window.open(document.querySelector('canvas').toDataURL());
-
-	    };
-
-	    $scope.handleFileSelect = function($files) {
-
-	      var canvasWidth = 500;
-	      var canvasHeight = 500;
-	      var file = $files[0];
-	      var reader = new FileReader();
-
-	      reader.onload = function(fileObject) {
-
-	          var data = fileObject.target.result;
-	          console.log(data);
-
-	          // Create an image object
-	          var image = new Image();
-	          image.onload = function() {
-	            canvasPhoto = this;
-	            $scope.redrawMeme(canvasPhoto, null, null);
-      		  };
-
-	          // Set image data to background image.
-	          image.src = data;
-	          console.log(fileObject.target.result);
-	      };
-
-	      reader.readAsDataURL(file);
-
-	    };
-
-		$scope.savePhoto = function($item) {
-			console.log($item);
 			var photo = new Photos({
-				spotifyId: $item.id,
-				title: $item.name,
-				artist: $item.artists[0].name,
-				artwork: $item.album.images[1].url,
-				preview_url: $item.preview_url
+				content: document.querySelector('canvas').toDataURL(),
+				title: $scope.topLine.trim() + ' ' + $scope.bottomLine.trim()
 			});
 			photo.$save(function(response) {
 				console.log(response);
 				$scope.photos.push(response);
 			}, function(errorResponse) {
 				$log.log(errorResponse);
-				var spotifyId = errorResponse.config.data.spotifyId,
-					trkId = 'photo_' + spotifyId;
 				$scope.error.message = errorResponse.data.message;
 				$scope.error.level = 'alert-warning';
 				$timeout(function() { $scope.error = {}; }, 5000);
-				$location.hash(trkId);
-				$log.log($scope.lookup[spotifyId]);
 			});
 		};
 
@@ -137,8 +103,8 @@ angular.module('photos').controller('PhotosController', ['$scope', '$log', '$sta
 			});
 		};
 
-		$scope.upvote = function(trk) {
-			var photo = trk || $scope.photo;
+		$scope.upvote = function($photo) {
+			var photo = $photo || $scope.photo;
 			if(photo.upvotes.indexOf(Authentication.user._id) > -1) {
 				$scope.error.message = 'You\'ve already upvoted ' + photo.title;
 				$scope.error.level = 'alert-info';
@@ -156,8 +122,8 @@ angular.module('photos').controller('PhotosController', ['$scope', '$log', '$sta
 					$scope.error.level = 'alert-warning';
 			});
 		};
-		$scope.downvote = function(trk) {
-			var photo = trk || $scope.photo;
+		$scope.downvote = function($photo) {
+			var photo = $photo || $scope.photo;
 			if(photo.downvotes.indexOf(Authentication.user._id) > -1) {
 				$scope.error.message = 'You\'ve already downvoted ' + photo.title;
 				$scope.error.level = 'alert-info';
@@ -176,30 +142,6 @@ angular.module('photos').controller('PhotosController', ['$scope', '$log', '$sta
 			});
 		};
 
-		$scope.getAllPhotos = function() {
-			// return $sce.trustAsResourceUrl('https://embed.spotify.com/?uri=spotify:photoset:PREFEREDTITLE:3u9fHuAtjMY1RW2mZfO4Cf');
-			var idArray = [];
-			if($scope.photos) {
-				idArray = $scope.photos.map(function(photo) {
-					return photo.spotifyId;
-				});
-			}
-				// $log.log(idArray);
-				return $sce.trustAsResourceUrl('https://embed.spotify.com/?uri=spotify:photoset:Reunion Playlist:' + idArray.join(','));
-		};
-
-		$scope.playPreview = function(photo) {
-			$scope.photos.forEach(function(trk) { trk.isPlaying = false; });
-			photo.isPlaying = true;
-            $scope.audio.src = photo.preview_url;
-            $scope.audio.play();
-		};
-
-		$scope.pausePreview = function(photo) {
-			photo.isPlaying = false;
-            $scope.audio.pause();
-		};
-
 		$scope.find = function() {
 			$scope.photos = Photos.query();
 		};
@@ -211,3 +153,43 @@ angular.module('photos').controller('PhotosController', ['$scope', '$log', '$sta
 		};
 	}
 ]);
+
+angular.module('photos').directive('file', function() {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        link: function($scope, el, attrs, ngModel){
+
+            el.bind('change', function(event){
+            	console.log(event);
+                var files = event.target.files;
+                var file = files[0];
+
+                ngModel.$setViewValue(file);
+                $scope.$apply();
+
+
+				var reader = new FileReader();
+
+				reader.onload = function(fileObject) {
+
+				  var data = fileObject.target.result;
+				  console.log(data);
+
+				  // Create an image object
+				  var image = new Image();
+				  image.onload = function() {
+				  	$scope.canvasPhoto = this;
+				    $scope.redrawMeme($scope.canvasPhoto, null, null);
+				  };
+
+				  // Set image data to background image.
+				  image.src = data;
+				  console.log(fileObject.target.result);
+				};
+
+				reader.readAsDataURL(file);
+				});
+        }
+    };
+});

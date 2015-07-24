@@ -1,0 +1,29 @@
+<section data-ng-controller="PhotosController">
+    <div ng-if="error.message" ng-class="['error', 'alert', error.level]" ng-bind="error.message"></div>
+    <div class="page-header">
+        <h1>The Memes</h1>
+        <p>Break out that shoebox of pics or the old yearbook and show us your best meme!</p>
+        <a class="btn btn-lg btn-primary" href="/#!/photos/create">Make a meme!</a>
+    </div>
+    <div class="list-group" data-ng-init="find()" style="position: relative;">
+        <div data-ng-repeat="photo in photos | orderBy:'-votes' " class="col-sm-4 col-md-3 col-lg-2 clearfix">
+            <div id="photo_{{photo[_id]}}">
+                <img class="thumbnail img-responsive" ng-src="{{photo.content}}">
+                <small class="list-group-item-text text-muted">
+                Added by
+                <span data-ng-bind="photo.user.displayName"></span>
+                on
+                <span data-ng-bind="photo.created | date:'mediumDate'"></span>
+                </small>
+                <i class="mirror glyphicon glyphicon-thumbs-down"
+                    ng-class="{ downvoted: photo.downvotes.indexOf(authentication.user._id) > -1 }"
+                    ng-click="downvote(photo)"></i>
+                <span class="vote-count" data-ng-bind="photo.votes"></span>
+                <i class="glyphicon glyphicon-thumbs-up"
+                    ng-class="{ upvoted: photo.upvotes.indexOf(authentication.user._id) > -1 }"
+                    ng-click="upvote(photo)"></i>
+                <i ng-show="photo.user._id === authentication.user._id" class="glyphicon glyphicon-trash" ng-click="remove(photo)"></i>
+            </div>
+        </div>
+    </div>
+</section>
