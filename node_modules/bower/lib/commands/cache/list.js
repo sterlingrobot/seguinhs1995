@@ -1,6 +1,5 @@
 var mout = require('mout');
 var PackageRepository = require('../../core/PackageRepository');
-var cli = require('../../util/cli');
 var defaultConfig = require('../../config');
 
 function list(logger, packages, options, config) {
@@ -14,12 +13,11 @@ function list(logger, packages, options, config) {
         packages = null;
     }
 
-    return repository.list()
-    .then(function (entries) {
+    return repository.list().then(function(entries) {
         if (packages) {
             // Filter entries according to the specified packages
-            entries = entries.filter(function (entry) {
-                return !!mout.array.find(packages, function (pkg) {
+            entries = entries.filter(function(entry) {
+                return !!mout.array.find(packages, function(pkg) {
                     return pkg === entry.pkgMeta.name;
                 });
             });
@@ -31,14 +29,14 @@ function list(logger, packages, options, config) {
 
 // -------------------
 
-list.line = function (logger, argv) {
+list.readOptions = function(argv) {
+    var cli = require('../../util/cli');
     var options = cli.readOptions(argv);
     var packages = options.argv.remain.slice(2);
-    return list(logger, packages, options);
-};
 
-list.completion = function () {
-    // TODO:
+    delete options.argv;
+
+    return [packages, options];
 };
 
 module.exports = list;

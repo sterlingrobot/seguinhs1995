@@ -1,5 +1,4 @@
 var Project = require('../core/Project');
-var cli = require('../util/cli');
 var defaultConfig = require('../config');
 
 function update(logger, names, options, config) {
@@ -19,21 +18,22 @@ function update(logger, names, options, config) {
 
 // -------------------
 
-update.line = function (logger, argv) {
-    var options = update.options(argv);
+update.readOptions = function(argv) {
+    var cli = require('../util/cli');
+
+    var options = cli.readOptions(
+        {
+            'force-latest': { type: Boolean, shorthand: 'F' },
+            production: { type: Boolean, shorthand: 'p' }
+        },
+        argv
+    );
+
     var names = options.argv.remain.slice(1);
-    return update(logger, names, options);
-};
 
-update.options = function (argv) {
-    return cli.readOptions({
-        'force-latest': { type: Boolean, shorthand: 'F' },
-        'production': { type: Boolean, shorthand: 'p' }
-    }, argv);
-};
+    delete options.argv;
 
-update.completion = function () {
-    // TODO:
+    return [names, options];
 };
 
 module.exports = update;

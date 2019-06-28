@@ -1,6 +1,6 @@
-'use strict';
-
 module.exports = function(grunt) {
+	'use strict';
+
 	// Unified Watch Object
 	var watchFiles = {
 		serverViews: ['app/views/**/*.*'],
@@ -65,18 +65,18 @@ module.exports = function(grunt) {
 				src: watchFiles.clientCSS
 			}
 		},
-        copy: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: 'public',
-                    src: ['**/img/**', '!dist/', '!lib/'],
-                    dest: 'public/dist/img',
-                    flatten: true,
-                    filter: 'isFile'
-                }]
-            }
-        },
+		copy: {
+			dist: {
+				files: [{
+					expand: true,
+					cwd: 'public',
+					src: ['**/img/**', '!dist/', '!lib/'],
+					dest: 'public/dist/img',
+					flatten: true,
+					filter: 'isFile'
+				}]
+			}
+		},
 		uglify: {
 			production: {
 				options: {
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
 			dev: {
 				script: 'server.js',
 				options: {
-					nodeArgs: ['--debug'],
+					nodeArgs: ['--inspect'],
 					ext: 'js,html',
 					watch: watchFiles.serverViews.concat(watchFiles.serverJS)
 				}
@@ -117,13 +117,13 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-        ngAnnotate: {
-            production: {
-                files: {
-                    'public/dist/application.js': '<%= applicationJavaScriptFiles %>'
-                }
-            }
-        },
+		ngAnnotate: {
+			production: {
+				files: {
+					'public/dist/application.js': '<%= applicationJavaScriptFiles %>'
+				}
+			}
+		},
 		concurrent: {
 			default: ['nodemon', 'watch'],
 			debug: ['nodemon', 'watch', 'node-inspector'],

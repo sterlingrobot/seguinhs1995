@@ -4,21 +4,21 @@
  * Module dependencies.
  */
 var express = require('express'),
-	morgan = require('morgan'),
-	bodyParser = require('body-parser'),
-	session = require('express-session'),
-	compress = require('compression'),
-	methodOverride = require('method-override'),
-	cookieParser = require('cookie-parser'),
-	helmet = require('helmet'),
-	passport = require('passport'),
-	mongoStore = require('connect-mongo')({
-		session: session
-	}),
-	flash = require('connect-flash'),
-	config = require('./config'),
-	consolidate = require('consolidate'),
-	path = require('path');
+		morgan = require('morgan'),
+		bodyParser = require('body-parser'),
+		session = require('express-session'),
+		compress = require('compression'),
+		methodOverride = require('method-override'),
+		cookieParser = require('cookie-parser'),
+		helmet = require('helmet'),
+		passport = require('passport'),
+		MongoStore = require('connect-mongo')({
+			session: session
+		}),
+		flash = require('connect-flash'),
+		config = require('./config'),
+		consolidate = require('consolidate'),
+		path = require('path');
 
 module.exports = function(db) {
 	// Initialize express app
@@ -93,7 +93,7 @@ module.exports = function(db) {
 		saveUninitialized: true,
 		resave: true,
 		secret: config.sessionSecret,
-		store: new mongoStore({
+		store: new MongoStore({
 			db: db.connection.db,
 			collection: config.sessionCollection
 		})
